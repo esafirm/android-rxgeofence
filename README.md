@@ -1,7 +1,23 @@
 ##RxGeoFence
 
+<img src="https://github.com/esafirm/android-rxgeofence/blob/master/art/ss1.png" width="200px">
+
 Rx wrapped GeoFence library, built on top of `GeoFire` well, maybe in the future we can choose the engine ( such as Awarness API) or maybe or own implementation :punch:
 
+##Download
+```groovy
+allprojects {
+		repositories {
+			maven { url "https://jitpack.io" }
+		}
+	}
+```	
+```
+dependencies {
+	        compile 'com.github.esafirm:android-rxgeofence:v0.1.1'
+	}
+```
+	
 ##Setup
 
 ```java
@@ -31,6 +47,11 @@ MAP_KEY=ENTER_YOUT_MAP_API_KEY_HERE
 
 ~ *You're good to go*
 
+
+
+
+---
+---
 ```
 The MIT License (MIT)
 
