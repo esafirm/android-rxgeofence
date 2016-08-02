@@ -1,5 +1,8 @@
 ##RxGeoFence
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RxGeoFence-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4004)
+
+
 <img src="https://github.com/esafirm/android-rxgeofence/blob/master/art/ss1.png" width="200px">
 
 Rx wrapped GeoFence library, built on top of `GeoFire` well, maybe in the future we can choose the engine ( such as Awarness API) or maybe or own implementation :punch:
