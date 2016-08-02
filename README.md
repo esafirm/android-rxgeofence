@@ -14,7 +14,7 @@ allprojects {
 ```	
 ```
 dependencies {
-	        compile 'com.github.esafirm:android-rxgeofence:v0.1.1'
+	        compile 'com.github.esafirm:android-rxgeofence:latest-version'
 	}
 ```
 	

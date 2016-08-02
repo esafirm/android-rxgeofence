@@ -18,9 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.subscriptions.Subscriptions;
 
 /**
  * Created by esafirm on 7/29/16.
@@ -29,7 +32,8 @@ public class RxGeoFenceOnSubscribe implements Observable.OnSubscribe<GeoFenceEve
 
   private static final String GEO_FIRE_REF = "/_geofire";
   private static final String APP_ID = "RxGeoFence";
-  private static final String USER_KEY = "UserRxGeoFence";
+
+  private final String userKey = "UserRxGeoFence" + UUID.randomUUID();
 
   private GeoFire geoFire;
   private Observable<List<Place>> geoFenceSource;
@@ -62,7 +66,7 @@ public class RxGeoFenceOnSubscribe implements Observable.OnSubscribe<GeoFenceEve
 
     locationSource.forEach(new Action1<LatLng>() {
       @Override public void call(LatLng latLng) {
-        geoFire.setLocation(USER_KEY, latLng.toGeoLocation());
+        geoFire.setLocation(userKey, latLng.toGeoLocation());
       }
     });
 
@@ -76,6 +80,13 @@ public class RxGeoFenceOnSubscribe implements Observable.OnSubscribe<GeoFenceEve
         }
       }
     });
+
+    subscriber.add(Subscriptions.create(new Action0() {
+      @Override public void call() {
+        stopListen();
+        geoFire.removeLocation(userKey);
+      }
+    }));
   }
 
   private void listen(GeoQueryWrapper<Place> wrapper,
@@ -84,7 +95,7 @@ public class RxGeoFenceOnSubscribe implements Observable.OnSubscribe<GeoFenceEve
     GeoQuery geoQuery = wrapper.getGeoQuery();
     geoQuery.addGeoQueryEventListener(new PlaceGeoQueryEventListener(wrapper.getData()) {
       @Override public void onChange(GeoFenceType type, String key, Place place) {
-        if (key.equalsIgnoreCase(USER_KEY)) {
+        if (key.equalsIgnoreCase(userKey)) {
           subscriber.onNext(new GeoFenceEvent(key, place, type));
         }
       }

@@ -14,6 +14,7 @@
 package com.esafirm.rxgeofence.utils;
 
 public final class Preconditions {
+
   public static void checkArgument(boolean assertion, String message) {
     if (!assertion) {
       throw new IllegalArgumentException(message);
